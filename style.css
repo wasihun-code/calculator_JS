@@ -112,6 +112,9 @@ body {
 .division {
     padding: 20px 31px;
 }
+.negative {
+    padding: 20px 27px;
+}
 .blur {
     filter: blur(1px);
 }
