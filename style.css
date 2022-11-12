@@ -3,12 +3,13 @@
 }
 
 .main {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 75vh;
-	min-height: 500px;
-	padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+    min-height: 500px;
+    padding: 10px;
+    user-select: none;
 }
 
 .container {
@@ -20,8 +21,18 @@
     height: 500px;
     border-radius: 12px;
     /* margin: auto; */
-    background-color:rgb(176, 124, 100);
+    background-color: rgb(176, 124, 100);
     border: 3px solid black;
+}
+
+.btn,
+.btn:focus,
+.btn:active {
+    background-color: #00f;
+}
+
+.btn:hover {
+    background-color: lightgrey;
 }
 
 .controller {
@@ -31,12 +42,14 @@
     align-items: center;
 }
 
-.display, .controller {
+.display,
+.controller {
     width: 350px;
     margin: auto;
 }
 
-.header, .display {
+.header,
+.display {
     height: 75px;
 }
 
@@ -44,15 +57,19 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    font-size:xx-large;
+    font-size: xx-large;
 
     border-radius: 10px;
-    background-color:rgb(162, 120, 120);
+    background-color: rgb(162, 120, 120);
     border: 2px solid black;
 }
 
 
-.firstRow, .secondRow, .thirdRow, .fourthRow, .fifthRow{
+.firstRow,
+.secondRow,
+.thirdRow,
+.fourthRow,
+.fifthRow {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -61,7 +78,9 @@
     height: 75px;
     width: inherit;
 }
-.number, .operator {
+
+.number,
+.operator {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,16 +92,21 @@
     border: 2px solid black
 }
 
-.clearBtn, .deleteBtn {
+.clearBtn,
+.deleteBtn {
     width: 220px;
     font-size: 23px;
 }
 
 .clearBtn {
     background-color: crimson;
-    color:#faebd7;
 }
 
 .deleteBtn {
     background-color: cadetblue;
+}
+
+.blur {
+    filter: blur(1px);
+    
 }

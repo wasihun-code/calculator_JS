@@ -1,6 +1,7 @@
 let numberBtns = document.querySelectorAll('.number');
 let operatorBtns = document.querySelectorAll('.operator')
 let displayed = document.querySelector('.display');
+let allBtns = document.querySelectorAll('.btn');
 
 let result;
 let currentNumber;
@@ -10,6 +11,15 @@ let counter = 0;
 let prevOperator;
 let operatorPressedCount = 0;
 
+
+allBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        btn.classList.add("blur");
+        setTimeout(function () {
+            btn.classList.remove("blur");
+        }, 100);
+    })
+})
 
 numberBtns.forEach(numberBtn => {
     numberBtn.addEventListener('click', function (e) {
@@ -21,7 +31,11 @@ operatorBtns.forEach(operatorBtn => {
     operatorBtn.addEventListener('click', function (e) {
         let currentOperator = e.target.innerText;
         operatorPressedCount += 1;
-        console.log("Count: ", operatorPressedCount);
+
+        if (currentOperator == "CLEAR"){
+            resetEverything();
+            return;
+        }
 
         if (currentOperator === '=') {
             if (prevOperator === '/' && currentNumber === 0){
@@ -38,7 +52,6 @@ operatorBtns.forEach(operatorBtn => {
                 first_number = undefined;
                 prevOperator = undefined;
             }
-
             operatorPressedCount = 0;
             currentNumber = 0;
         }
@@ -60,7 +73,6 @@ operatorBtns.forEach(operatorBtn => {
             displayed.innerText = first_number;
         }
         prevOperator = currentOperator;
-
     })
 })
 
@@ -82,9 +94,10 @@ function resetEverything() {
     operatorPressedCount = 0;
     first_number = undefined;
     prevOperator = undefined;
-    currentNumber = undefined;
-    displayNumber.innerText = 0;
+    currentNumber = 0;
+    displayed.innerText = 0;
 }
+
 function doTheMath(a, operator, b) {
 
     if (operator === '+')
