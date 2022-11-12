@@ -1,13 +1,15 @@
 let numberBtns = document.querySelectorAll('.number');
 let operatorBtns = document.querySelectorAll('.operator')
 let displayed = document.querySelector('.display');
+
+let result;
 let currentNumber;
 let first_number;
-let prevOperator;
+
 let counter = 0;
+let prevOperator;
 let operatorPressedCount = 0;
 
-// console.log(displayed);
 
 numberBtns.forEach(numberBtn => {
     numberBtn.addEventListener('click', function (e) {
@@ -22,9 +24,13 @@ operatorBtns.forEach(operatorBtn => {
         console.log("Count: ", operatorPressedCount);
 
         if (currentOperator === '=') {
-            let result;
-            console.log("First:", first_number, "Prev:", prevOperator)
-            if (first_number && (prevOperator != '=')) {
+            if (prevOperator === '/' && currentNumber === 0){
+                alert("Division By Zero");
+                resetEverything();
+                return;
+            }
+
+            if (first_number && prevOperator && (prevOperator != '=')) {
                 result = doTheMath(first_number, prevOperator, currentNumber);
                 displayed.innerText = result;
             } else {
@@ -33,12 +39,16 @@ operatorBtns.forEach(operatorBtn => {
                 prevOperator = undefined;
             }
 
-
             operatorPressedCount = 0;
             currentNumber = 0;
         }
         else if (operatorPressedCount >= 2) {
-            let result = doTheMath(first_number, prevOperator, currentNumber);
+            if (prevOperator === '/' && currentNumber === 0){
+                alert("Division By Zero");
+                resetEverything();
+                return;
+            }
+            result = doTheMath(first_number, prevOperator, currentNumber);
 
             first_number = result;
             displayed.innerText = result;
@@ -47,13 +57,12 @@ operatorBtns.forEach(operatorBtn => {
         else {
             first_number = currentNumber;
             currentNumber = 0;
-            displayed.innerText = currentNumber;
+            displayed.innerText = first_number;
         }
         prevOperator = currentOperator;
 
     })
 })
-
 
 function displayNumber(e) {
     let numberOnDisplay = parseInt(e.target.innerText);
@@ -68,10 +77,15 @@ function displayNumber(e) {
     displayed.innerText = currentNumber;
 }
 
+function resetEverything() {
+    counter = 0;
+    operatorPressedCount = 0;
+    first_number = undefined;
+    prevOperator = undefined;
+    currentNumber = undefined;
+    displayNumber.innerText = 0;
+}
 function doTheMath(a, operator, b) {
-    console.log("a:", a, "Opeartor:", operator,
-        "b:", b)
-    let result = 0;
 
     if (operator === '+')
         return result = a + b;
