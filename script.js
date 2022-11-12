@@ -36,7 +36,12 @@ operatorBtns.forEach(operatorBtn => {
             resetEverything();
             return;
         }
-
+        if (currentOperator === "DELETE"){
+            if (currentNumber >= 10)
+                currentNumber = Math.floor(currentNumber / 10);
+            else
+                resetEverything();
+        }
         if (currentOperator === '=') {
             if (prevOperator === '/' && currentNumber === 0){
                 alert("Division By Zero");
