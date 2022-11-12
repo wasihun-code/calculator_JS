@@ -1,7 +1,7 @@
 let numberBtns = document.querySelectorAll('.number');
 let operatorBtns = document.querySelectorAll('.operator')
 let displayed = document.querySelector('.display');
-let numberOnDisplay;
+let currentNumber;
 let first_number;
 let prevOperator;
 let counter = 0;
@@ -22,25 +22,32 @@ operatorBtns.forEach(operatorBtn => {
         console.log("Count: ", operatorPressedCount);
 
         if (currentOperator === '=') {
-
-        }
-        else if (operatorPressedCount >= 2) {
-            let obj = doTheMath(first_number, prevOperator, numberOnDisplay);
-            
-            if (obj.Done === true) {
-                result = obj.Result;
-                first_number = result;
+            let result;
+            console.log("First:", first_number, "Prev:", prevOperator)
+            if (first_number && (prevOperator != '=')) {
+                result = doTheMath(first_number, prevOperator, currentNumber);
                 displayed.innerText = result;
             } else {
-                alert("Division by 0 is impossible")
-                operatorPressedCount = 0;
+                displayed.innerText = 0;
+                first_number = undefined;
+                prevOperator = undefined;
             }
-            numberOnDisplay = 0;
+
+
+            operatorPressedCount = 0;
+            currentNumber = 0;
+        }
+        else if (operatorPressedCount >= 2) {
+            let result = doTheMath(first_number, prevOperator, currentNumber);
+
+            first_number = result;
+            displayed.innerText = result;
+            currentNumber = 0;
         }
         else {
-            first_number = numberOnDisplay;
-            numberOnDisplay = 0;
-            displayed.innerText = numberOnDisplay;
+            first_number = currentNumber;
+            currentNumber = 0;
+            displayed.innerText = currentNumber;
         }
         prevOperator = currentOperator;
 
@@ -49,34 +56,29 @@ operatorBtns.forEach(operatorBtn => {
 
 
 function displayNumber(e) {
-    let currentNumber = parseInt(e.target.innerText);
+    let numberOnDisplay = parseInt(e.target.innerText);
 
     if (counter === 0) {
-        numberOnDisplay = currentNumber;
+        currentNumber = numberOnDisplay;
         counter++;
     }
     else {
-        numberOnDisplay = numberOnDisplay * 10 + currentNumber;
+        currentNumber = currentNumber * 10 + numberOnDisplay;
     }
-    displayed.innerText = numberOnDisplay;
+    displayed.innerText = currentNumber;
 }
 
 function doTheMath(a, operator, b) {
     console.log("a:", a, "Opeartor:", operator,
         "b:", b)
     let result = 0;
-    let successed = true;
+
     if (operator === '+')
-        result = a + b;
+        return result = a + b;
     else if (operator === '-')
-        result = a - b;
+        return result = a - b;
     else if (operator === '*')
-        result = a * b
-    else if (operator === '/'){
-        if (b === 0){
-            successed = false;
-        } else
-            result = a / b
-    }
-    return { "Result": result, "Done": successed }
+        return result = a * b
+    else if (operator === '/')
+        return result = a / b
 }
