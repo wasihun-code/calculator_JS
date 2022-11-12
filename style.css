@@ -102,11 +102,10 @@
     background-color: crimson;
 }
 
-.deleteBtn {
+.deleteBtn, .negative {
     background-color: cadetblue;
 }
 
 .blur {
     filter: blur(1px);
-    
 }

@@ -13,7 +13,7 @@ let operatorPressedCount = 0;
 
 
 allBtns.forEach(btn => {
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
         btn.classList.add("blur");
         setTimeout(function () {
             btn.classList.remove("blur");
@@ -32,18 +32,24 @@ operatorBtns.forEach(operatorBtn => {
         let currentOperator = e.target.innerText;
         operatorPressedCount += 1;
 
-        if (currentOperator == "CLEAR"){
+        if (currentOperator == "CLEAR") {
             resetEverything();
             return;
         }
-        if (currentOperator === "DELETE"){
+        if (currentOperator === "DELETE") {
             if (currentNumber >= 10)
                 currentNumber = Math.floor(currentNumber / 10);
             else
                 resetEverything();
         }
+        if (currentOperator === 'N') {
+            currentNumber *= -1;
+            displayed.innerText = currentNumber;
+            operatorPressedCount-=1;
+            return;
+        }
         if (currentOperator === '=') {
-            if (prevOperator === '/' && currentNumber === 0){
+            if (prevOperator === '/' && currentNumber === 0) {
                 alert("Division By Zero");
                 resetEverything();
                 return;
@@ -61,7 +67,7 @@ operatorBtns.forEach(operatorBtn => {
             currentNumber = 0;
         }
         else if (operatorPressedCount >= 2) {
-            if (prevOperator === '/' && currentNumber === 0){
+            if (prevOperator === '/' && currentNumber === 0) {
                 alert("Division By Zero");
                 resetEverything();
                 return;
