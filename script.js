@@ -41,14 +41,16 @@ operatorBtns.forEach(operatorBtn => {
         }
         if (currentOperator === "DELETE") {
             if (currentNumber >= 10)
-                currentNumber = Math.floor(currentNumber / 10);
-            else
+                currentNumber = Math.floor(currentNumber/10);
+            else 
                 resetEverything();
+            displayed.innerText = currentNumber;
+            return;
         }
         if (currentOperator === 'N') {
             currentNumber *= -1;
             displayed.innerText = currentNumber;
-            operatorPressedCount-=1;
+            operatorPressedCount -= 1;
             return;
         }
         if (currentOperator === '=') {
@@ -66,8 +68,8 @@ operatorBtns.forEach(operatorBtn => {
                 first_number = undefined;
                 prevOperator = undefined;
             }
-            operatorPressedCount = 0;
-            currentNumber = 0;
+            operatorDisplayed.innerText = ' ';
+            return;
         }
         else if (operatorPressedCount >= 2) {
 
@@ -81,12 +83,12 @@ operatorBtns.forEach(operatorBtn => {
             first_number = result;
             displayed.innerText = result;
             if (currentOperator != "DELETE")
-            operatorDisplayed.innerText = first_number +' ' +currentOperator +' ';
+                operatorDisplayed.innerText = first_number + ' ' + currentOperator + ' ';
             currentNumber = 0;
         }
         else {
             if (currentOperator != "DELETE")
-                 operatorDisplayed.innerText = currentNumber +' ' +currentOperator + ' ';
+                operatorDisplayed.innerText = currentNumber + ' ' + currentOperator + ' ';
 
             first_number = currentNumber;
             currentNumber = 0;
@@ -115,13 +117,13 @@ function displayNumber(e) {
 
 function resetEverything() {
     counter = 0;
+    currentNumber = 0;
+    numberOverflow = false;
+    displayed.innerText = 0;
     operatorPressedCount = 0;
     first_number = undefined;
     prevOperator = undefined;
-    currentNumber = 0;
-    displayed.innerText = 0;
     operatorDisplayed.innerText = ' ';
-    numberOverflow = false;
 }
 
 function doTheMath(a, operator, b) {
