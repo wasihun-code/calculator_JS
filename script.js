@@ -63,12 +63,14 @@ operatorBtns.forEach(operatorBtn => {
             if (first_number && prevOperator && (prevOperator != '=')) {
                 result = doTheMath(first_number, prevOperator, currentNumber);
                 displayed.innerText = result;
+                operatorDisplayed.innerText = ' ';
             } else {
+                console.log("HI")
                 displayed.innerText = 0;
                 first_number = undefined;
                 prevOperator = undefined;
+                resetEverything();
             }
-            operatorDisplayed.innerText = ' ';
             return;
         }
         else if (operatorPressedCount >= 2) {
