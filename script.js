@@ -2,6 +2,7 @@ let numberBtns = document.querySelectorAll('.number');
 let operatorBtns = document.querySelectorAll('.operator')
 let displayed = document.querySelector('.display');
 let allBtns = document.querySelectorAll('.btn');
+let operatorDisplayed = document.querySelector(".operatorDisp");
 
 let result;
 let currentNumber;
@@ -9,6 +10,7 @@ let first_number;
 
 let counter = 0;
 let prevOperator;
+let numberOverflow = false;
 let operatorPressedCount = 0;
 
 
@@ -31,6 +33,7 @@ operatorBtns.forEach(operatorBtn => {
     operatorBtn.addEventListener('click', function (e) {
         let currentOperator = e.target.innerText;
         operatorPressedCount += 1;
+
 
         if (currentOperator == "CLEAR") {
             resetEverything();
@@ -67,6 +70,7 @@ operatorBtns.forEach(operatorBtn => {
             currentNumber = 0;
         }
         else if (operatorPressedCount >= 2) {
+
             if (prevOperator === '/' && currentNumber === 0) {
                 alert("Division By Zero");
                 resetEverything();
@@ -76,9 +80,14 @@ operatorBtns.forEach(operatorBtn => {
 
             first_number = result;
             displayed.innerText = result;
+            if (currentOperator != "DELETE")
+            operatorDisplayed.innerText = first_number +' ' +currentOperator +' ';
             currentNumber = 0;
         }
         else {
+            if (currentOperator != "DELETE")
+                 operatorDisplayed.innerText = currentNumber +' ' +currentOperator + ' ';
+
             first_number = currentNumber;
             currentNumber = 0;
             displayed.innerText = first_number;
@@ -95,8 +104,12 @@ function displayNumber(e) {
         counter++;
     }
     else {
-        currentNumber = currentNumber * 10 + numberOnDisplay;
+        if (!numberOverflow)
+            currentNumber = currentNumber * 10 + numberOnDisplay;
     }
+    let size = currentNumber.toString().length;
+    if (size > 15)
+        numberOverflow = true
     displayed.innerText = currentNumber;
 }
 
@@ -107,6 +120,8 @@ function resetEverything() {
     prevOperator = undefined;
     currentNumber = 0;
     displayed.innerText = 0;
+    operatorDisplayed.innerText = ' ';
+    numberOverflow = false;
 }
 
 function doTheMath(a, operator, b) {
